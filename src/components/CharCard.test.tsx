@@ -93,4 +93,25 @@ describe('CharCard', () => {
     const card = screen.getByTestId('char-card');
     expect(card).toHaveClass('border-gray-300');
   });
+
+  it('renders with small size', () => {
+    render(<CharCard data={mockCharData} fontMode="loop" size="small" />);
+
+    const charElement = screen.getByText('ก');
+    expect(charElement).toHaveClass('text-3xl');
+  });
+
+  it('renders with medium size (default)', () => {
+    render(<CharCard data={mockCharData} fontMode="loop" size="medium" />);
+
+    const charElement = screen.getByText('ก');
+    expect(charElement).toHaveClass('text-5xl');
+  });
+
+  it('renders with large size', () => {
+    render(<CharCard data={mockCharData} fontMode="loop" size="large" />);
+
+    const charElement = screen.getByText('ก');
+    expect(charElement).toHaveClass('text-7xl');
+  });
 });

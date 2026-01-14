@@ -92,4 +92,39 @@ describe('App', () => {
     expect(midClass).toBeInTheDocument();
     expect(lowClass).toBeInTheDocument();
   });
+
+  it('renders card size toggle buttons', () => {
+    render(<App />);
+
+    const smallButton = screen.getByRole('button', { name: /小/i });
+    const mediumButton = screen.getByRole('button', { name: /中/i });
+    const largeButton = screen.getByRole('button', { name: /大/i });
+
+    expect(smallButton).toBeInTheDocument();
+    expect(mediumButton).toBeInTheDocument();
+    expect(largeButton).toBeInTheDocument();
+  });
+
+  it('toggles card size when clicked', () => {
+    render(<App />);
+
+    const smallButton = screen.getByRole('button', { name: /小/i });
+    const mediumButton = screen.getByRole('button', { name: /中/i });
+    const largeButton = screen.getByRole('button', { name: /大/i });
+
+    // デフォルトで中が選択されている
+    expect(mediumButton).toHaveClass('bg-green-500');
+
+    // 小をクリック
+    fireEvent.click(smallButton);
+    expect(smallButton).toHaveClass('bg-green-500');
+
+    // 大をクリック
+    fireEvent.click(largeButton);
+    expect(largeButton).toHaveClass('bg-green-500');
+
+    // 中をクリック
+    fireEvent.click(mediumButton);
+    expect(mediumButton).toHaveClass('bg-green-500');
+  });
 });

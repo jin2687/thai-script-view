@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import CharCard from './components/CharCard';
+import CharCard, { type CardSize } from './components/CharCard';
 import { getCharactersByCategory } from './data/thaiData';
 import type { ThaiChar } from './data/thaiData';
 
@@ -9,29 +9,45 @@ type Category = ThaiChar['category'];
 function App() {
   const [fontMode, setFontMode] = useState<FontMode>('loop');
   const [category, setCategory] = useState<Category>('consonant');
+  const [cardSize, setCardSize] = useState<CardSize>('medium');
 
   const characters = getCharactersByCategory(category);
 
+  // カードサイズに応じたグリッドクラス
+  const getGridCols = () => {
+    switch (cardSize) {
+      case 'small':
+        return 'grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10';
+      case 'large':
+        return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5';
+      case 'medium':
+      default:
+        return 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6';
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-900 dark:to-gray-800">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold text-center mb-6 text-gray-800 dark:text-gray-100">
+      {/* Fixed Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-md">
+        <div className="container mx-auto px-4 py-3">
+          {/* Title */}
+          <h1 className="text-2xl md:text-3xl font-bold text-center mb-3 text-gray-800 dark:text-gray-100">
             🇹🇭 Thai Script Dual-View
           </h1>
 
-          {/* Font Mode Toggle */}
-          <div className="flex justify-center mb-6">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-2 shadow-md inline-flex gap-2">
+          {/* Controls Row */}
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mb-2">
+            {/* Font Mode Toggle */}
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-1.5 shadow-sm inline-flex gap-1.5">
               <button
                 onClick={() => setFontMode('loop')}
                 className={`
-                  px-6 py-2 rounded-md font-medium transition-all duration-200
+                  px-4 py-1.5 rounded-md text-sm font-medium transition-all duration-200
                   ${
                     fontMode === 'loop'
                       ? 'bg-blue-500 text-white shadow-md'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                      : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                   }
                 `}
               >
@@ -40,69 +56,115 @@ function App() {
               <button
                 onClick={() => setFontMode('noloop')}
                 className={`
-                  px-6 py-2 rounded-md font-medium transition-all duration-200
+                  px-4 py-1.5 rounded-md text-sm font-medium transition-all duration-200
                   ${
                     fontMode === 'noloop'
                       ? 'bg-blue-500 text-white shadow-md'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                      : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                   }
                 `}
               >
                 No-Loop (無頭)
               </button>
             </div>
+
+            {/* Card Size Toggle */}
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-1.5 shadow-sm inline-flex gap-1.5">
+              <button
+                onClick={() => setCardSize('small')}
+                className={`
+                  px-4 py-1.5 rounded-md text-sm font-medium transition-all duration-200
+                  ${
+                    cardSize === 'small'
+                      ? 'bg-green-500 text-white shadow-md'
+                      : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  }
+                `}
+              >
+                小
+              </button>
+              <button
+                onClick={() => setCardSize('medium')}
+                className={`
+                  px-4 py-1.5 rounded-md text-sm font-medium transition-all duration-200
+                  ${
+                    cardSize === 'medium'
+                      ? 'bg-green-500 text-white shadow-md'
+                      : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  }
+                `}
+              >
+                中
+              </button>
+              <button
+                onClick={() => setCardSize('large')}
+                className={`
+                  px-4 py-1.5 rounded-md text-sm font-medium transition-all duration-200
+                  ${
+                    cardSize === 'large'
+                      ? 'bg-green-500 text-white shadow-md'
+                      : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  }
+                `}
+              >
+                大
+              </button>
+            </div>
           </div>
 
           {/* Category Tabs */}
-          <div className="flex justify-center mb-6">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-2 shadow-md inline-flex gap-2 flex-wrap justify-center">
+          <div className="flex justify-center mb-2">
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-1.5 shadow-sm inline-flex gap-1.5 flex-wrap justify-center">
               <TabButton
                 active={category === 'consonant'}
                 onClick={() => setCategory('consonant')}
-                label="子音 (Consonants)"
+                label="子音"
               />
               <TabButton
                 active={category === 'vowel'}
                 onClick={() => setCategory('vowel')}
-                label="母音 (Vowels)"
+                label="母音"
               />
               <TabButton
                 active={category === 'number'}
                 onClick={() => setCategory('number')}
-                label="数字 (Numbers)"
+                label="数字"
               />
               <TabButton
                 active={category === 'tone'}
                 onClick={() => setCategory('tone')}
-                label="記号 (Tones)"
+                label="記号"
               />
             </div>
           </div>
 
           {/* Class Legend (子音の時のみ表示) */}
           {category === 'consonant' && (
-            <div className="flex justify-center gap-4 text-sm flex-wrap">
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-red-400 rounded"></div>
-                <span className="text-gray-700 dark:text-gray-300">高子音 (High)</span>
+            <div className="flex justify-center gap-3 text-xs flex-wrap">
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 border-2 border-red-400 rounded"></div>
+                <span className="text-gray-700 dark:text-gray-300">高子音</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-blue-400 rounded"></div>
-                <span className="text-gray-700 dark:text-gray-300">中子音 (Mid)</span>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 border-2 border-blue-400 rounded"></div>
+                <span className="text-gray-700 dark:text-gray-300">中子音</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-green-400 rounded"></div>
-                <span className="text-gray-700 dark:text-gray-300">低子音 (Low)</span>
+              <div className="flex items-center gap-1.5">
+                <div className="w-3 h-3 border-2 border-green-400 rounded"></div>
+                <span className="text-gray-700 dark:text-gray-300">低子音</span>
               </div>
             </div>
           )}
-        </header>
+        </div>
+      </header>
 
+      {/* Main Content with top padding for fixed header */}
+      <div className="container mx-auto px-4 pt-44 pb-8">
         {/* Character Grid */}
         <main>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          <div className={`grid ${getGridCols()} gap-4`}>
             {characters.map((char) => (
-              <CharCard key={char.char} data={char} fontMode={fontMode} />
+              <CharCard key={char.char} data={char} fontMode={fontMode} size={cardSize} />
             ))}
           </div>
         </main>
@@ -131,11 +193,11 @@ function TabButton({ active, onClick, label }: TabButtonProps) {
     <button
       onClick={onClick}
       className={`
-        px-4 py-2 rounded-md font-medium transition-all duration-200 border-2
+        px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 border-2
         ${
           active
             ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300'
-            : 'border-transparent bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600'
+            : 'border-transparent bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600'
         }
       `}
     >
