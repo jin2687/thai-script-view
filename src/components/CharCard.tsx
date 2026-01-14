@@ -69,26 +69,26 @@ function getSizeClasses(size: CardSize) {
   switch (size) {
     case 'small':
       return {
-        padding: 'p-2',
-        gap: 'gap-1',
-        charSize: 'text-3xl md:text-4xl',
+        padding: 'p-1.5',
+        gap: 'gap-0.5',
+        charSize: 'text-2xl md:text-3xl',
         nameSize: 'text-xs',
         meaningSize: 'text-xs',
       };
     case 'large':
       return {
-        padding: 'p-6',
-        gap: 'gap-3',
-        charSize: 'text-7xl md:text-8xl',
-        nameSize: 'text-base',
-        meaningSize: 'text-sm',
+        padding: 'p-4',
+        gap: 'gap-2',
+        charSize: 'text-6xl md:text-7xl',
+        nameSize: 'text-sm',
+        meaningSize: 'text-xs',
       };
     case 'medium':
     default:
       return {
-        padding: 'p-4',
-        gap: 'gap-2',
-        charSize: 'text-5xl md:text-6xl',
+        padding: 'p-3',
+        gap: 'gap-1.5',
+        charSize: 'text-4xl md:text-5xl',
         nameSize: 'text-sm',
         meaningSize: 'text-xs',
       };

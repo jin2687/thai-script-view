@@ -98,20 +98,20 @@ describe('CharCard', () => {
     render(<CharCard data={mockCharData} fontMode="loop" size="small" />);
 
     const charElement = screen.getByText('ก');
-    expect(charElement).toHaveClass('text-3xl');
+    expect(charElement).toHaveClass('text-2xl');
   });
 
   it('renders with medium size (default)', () => {
     render(<CharCard data={mockCharData} fontMode="loop" size="medium" />);
 
     const charElement = screen.getByText('ก');
-    expect(charElement).toHaveClass('text-5xl');
+    expect(charElement).toHaveClass('text-4xl');
   });
 
   it('renders with large size', () => {
     render(<CharCard data={mockCharData} fontMode="loop" size="large" />);
 
     const charElement = screen.getByText('ก');
-    expect(charElement).toHaveClass('text-7xl');
+    expect(charElement).toHaveClass('text-6xl');
   });
 });

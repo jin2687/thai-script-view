@@ -11,8 +11,8 @@ describe('App', () => {
 
   it('renders font mode toggle', () => {
     render(<App />);
-    const loopButton = screen.getByRole('button', { name: /^Loop \(有頭\)$/i });
-    const noLoopButton = screen.getByRole('button', { name: /^No-Loop \(無頭\)$/i });
+    const loopButton = screen.getByRole('button', { name: /^Loop$/i });
+    const noLoopButton = screen.getByRole('button', { name: /^No-Loop$/i });
 
     expect(loopButton).toBeInTheDocument();
     expect(noLoopButton).toBeInTheDocument();
@@ -21,8 +21,8 @@ describe('App', () => {
   it('toggles font mode when clicked', () => {
     render(<App />);
 
-    const loopButton = screen.getByRole('button', { name: /^Loop \(有頭\)$/i });
-    const noLoopButton = screen.getByRole('button', { name: /^No-Loop \(無頭\)$/i });
+    const loopButton = screen.getByRole('button', { name: /^Loop$/i });
+    const noLoopButton = screen.getByRole('button', { name: /^No-Loop$/i });
 
     // デフォルトでLoopが選択されている
     expect(loopButton).toHaveClass('bg-blue-500');
